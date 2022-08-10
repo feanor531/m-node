@@ -89,6 +89,13 @@ function Product (id, name, description, price, brand, sizes, activeSize, quanti
         this.reviews.push(review);
     }
 
+    this.deleteReview = function(reviewID)  {
+        let position = this.reviews.findIndex(item => item.id == reviewID);
+        if (position >= 0)  {
+            this.reviews.splice(position, 1);
+        }
+    }
+
     this.getImage = function(image) {
         let position = this.images.indexOf(image);
         return position >=0 ? this.images[position] : this.images[0];
@@ -104,6 +111,23 @@ function Product (id, name, description, price, brand, sizes, activeSize, quanti
         if (position >= 0)  {
             this.sizes.splice(position, 1);
         }
+    }
+
+    this.getAverageRating = function()  {
+        let sum;
+        for (const review of this.reviews) {
+            console.log(review.rating);
+            //sum += Object.values(review.rating).reduce((sumRating, currentReating) => sumRating + currentReating, 0);
+        }
+
+        // for (const review in this.reviews) {
+        //     if (this.reviews.hasOwnProperty.call(this.reviews, review)) {
+        //         console.log(review);
+        //         //sum += review.reating.reduce((sumRating, currentReating) => sumRating + Object.values(currentReating));
+        //     }
+        // }
+
+        return sum / this.reviews.length;
     }
 
 } 
@@ -146,12 +170,26 @@ function Reviews(id, author, date, comment, rating) {
 
 let p = new Product(10, "T-shirt", "T-shirt", 12300, "Adidas",["S", "L", "XL"], "L", 150, new Date("2022-04-15 18:30"), ["Picture1", "Picture2"]);
 
-p.addReview(new Reviews("1", "Vasya", Date.now(), "Wow", new Map([['service', '5'], ['price', '5'], ['value', '5'], ['value', '4']])));
-p.addReview(new Reviews("2", "Peter", Date.now(), "Ok", new Map([['service', '4'], ['price', '4'], ['value', '3'], ['value', '4']])));
-p.addReview(new Reviews("3", "Olga", Date.now(), "Wery bed", new Map([['service', '2'], ['price', '2'], ['value', '1'], ['value', '1']])));
-console.log();
-p.deleteSize("xxxL")
+p.addReview(new Reviews("1", "Vasya", Date.now(), "Wow", new Map([['service', 5], ['price', 5], ['value', 5], ['value', 4]])));
+p.addReview(new Reviews("2", "Peter", Date.now(), "Ok", new Map([['service', 4], ['price', 4], ['value', 3], ['value', 4]])));
+p.addReview(new Reviews("3", "Olga", Date.now(), "Wery bed", new Map([['service', 2], ['price', 2], ['value', 1], ['value', 1]])));
+
+// for (const it of p) {
+//     console.log(it);
+// }
+// p.deleteReview('4');
+// let pp = p.getReviews();
+// for (const key in pp) {
+//     if (pp.hasOwnProperty.call(pp, key)) {
+//         console.log(pp[key]);
+        
+//     }
+// }
+
+
+console.log(p.getAverageRating() );
+
 //p.setDate('2020-10-15 ');
-console.log(p.getSizes());
+console.log(p.getReviews());
 let d = Date.now();
 console.log(d);
