@@ -161,15 +161,42 @@ function Reviews(id, author, date, comment, rating) {
 }
 
 
-function searchProducts(products, search) {
-
+function sortProducts(products, sortRule) {
+    products.sort((a, b) => a.name.localeCompare(b.name));    
+    
 }
 
-let p = new Product(10, "T-shirt", "T-shirt", 12300, "Adidas",["S", "L", "XL"], "L", 150, new Date("2022-04-15 18:30"), ["Picture1", "Picture2"]);
+function searchProducts(products, search) {
+    return products.filter(product => (product.name.includes(search) || product.description.includes(search)));
+}
 
-p.addReview(new Reviews("1", "Vasya", Date.now(), "Wow", {'service': 5, 'price': 5, 'value': 5, 'quality': 4}));
-p.addReview(new Reviews("2", "Peter", Date.now(), "Ok", {'service': 4, 'price': 4, 'value': 3, 'quality': 4}));
-p.addReview(new Reviews("3", "Olga", Date.now(), "Wery bed", {'service': 1, 'price': 2, 'value': 1, 'quality': 1}));
+
+let products = [];
+
+products.push(new Product("120", "T-shirt", "T-shirt", 12300, "Adidas",["S", "L", "XL"], "L", 150, new Date("2022-04-15 18:30"), ["Picture1", "Picture2"]));
+products.push(new Product("11", "shirt", "shirt", 12300, "Nike",["S", "L", "XL", "XXL"], "L", 150, new Date("2022-04-15 18:30"), ["Picture1", "Picture2"]));
+products.push(new Product("100", "dress", "cool dress", 12300, "Zara",["S", "L", "XL", "XXL"], "L", 150, new Date("2022-04-15 18:30"), ["Picture1", "Picture2"]));
+products.push(new Product("103", "underpants", "new style", 12300, "Tico",["XXXXXL", "xL", "XXL", "XXL"], "L", 150, new Date("2022-04-15 18:30"), ["Picture1", "Picture2"]));
+
+for (const product of products) {
+    product.addReview(new Reviews("1", "Vasya", Date.now(), "Wow", {'service': 5, 'price': 5, 'value': 5, 'quality': 4}));
+    product.addReview(new Reviews("2", "Peter", Date.now(), "Ok", {'service': 4, 'price': 4, 'value': 3, 'quality': 4}));
+    product.addReview(new Reviews("3", "Olga", Date.now(), "Wery bed", {'service': 1, 'price': 2, 'value': 1, 'quality': 1}));
+}
+
+let answers = searchProducts(products, "sh");
+
+for (const answer of answers) {
+    console.log(answer);
+}
+
+console.log("______________________");
+sortProducts(products);
+
+for (const product of products) {
+    console.log(product);
+}
+
 
 // for (const it of p) {
 //     console.log(it);
@@ -184,9 +211,3 @@ p.addReview(new Reviews("3", "Olga", Date.now(), "Wery bed", {'service': 1, 'pri
 // }
 
 
-console.log(p.getAverageRating());
-
-//p.setDate('2020-10-15 ');
-console.log(p.getReviews());
-let d = Date.now();
-console.log(d);
