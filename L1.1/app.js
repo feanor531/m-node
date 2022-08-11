@@ -114,18 +114,10 @@ function Product (id, name, description, price, brand, sizes, activeSize, quanti
     }
 
     this.getAverageRating = function()  {
-        let sum;
+        let sum = 0;
         for (const review of this.reviews) {
-            console.log(review.rating);
-            //sum += Object.values(review.rating).reduce((sumRating, currentReating) => sumRating + currentReating, 0);
+            sum += Object.values(review.rating).reduce((sumRating, currentReating) => (sumRating += currentReating), 0);
         }
-
-        // for (const review in this.reviews) {
-        //     if (this.reviews.hasOwnProperty.call(this.reviews, review)) {
-        //         console.log(review);
-        //         //sum += review.reating.reduce((sumRating, currentReating) => sumRating + Object.values(currentReating));
-        //     }
-        // }
 
         return sum / this.reviews.length;
     }
@@ -168,11 +160,16 @@ function Reviews(id, author, date, comment, rating) {
 
 }
 
+
+function searchProducts(products, search) {
+
+}
+
 let p = new Product(10, "T-shirt", "T-shirt", 12300, "Adidas",["S", "L", "XL"], "L", 150, new Date("2022-04-15 18:30"), ["Picture1", "Picture2"]);
 
-p.addReview(new Reviews("1", "Vasya", Date.now(), "Wow", new Map([['service', 5], ['price', 5], ['value', 5], ['value', 4]])));
-p.addReview(new Reviews("2", "Peter", Date.now(), "Ok", new Map([['service', 4], ['price', 4], ['value', 3], ['value', 4]])));
-p.addReview(new Reviews("3", "Olga", Date.now(), "Wery bed", new Map([['service', 2], ['price', 2], ['value', 1], ['value', 1]])));
+p.addReview(new Reviews("1", "Vasya", Date.now(), "Wow", {'service': 5, 'price': 5, 'value': 5, 'quality': 4}));
+p.addReview(new Reviews("2", "Peter", Date.now(), "Ok", {'service': 4, 'price': 4, 'value': 3, 'quality': 4}));
+p.addReview(new Reviews("3", "Olga", Date.now(), "Wery bed", {'service': 1, 'price': 2, 'value': 1, 'quality': 1}));
 
 // for (const it of p) {
 //     console.log(it);
@@ -187,7 +184,7 @@ p.addReview(new Reviews("3", "Olga", Date.now(), "Wery bed", new Map([['service'
 // }
 
 
-console.log(p.getAverageRating() );
+console.log(p.getAverageRating());
 
 //p.setDate('2020-10-15 ');
 console.log(p.getReviews());
