@@ -162,8 +162,27 @@ function Reviews(id, author, date, comment, rating) {
 
 
 function sortProducts(products, sortRule) {
-    products.sort((a, b) => a.name.localeCompare(b.name));    
+    switch (sortRule) {
+        case "id":
+            products.sort((a, b) => {
+                if(a.id.length === b.id.length) {
+                    return a.id.localeCompare(b.id);
+                } else 
+                    return a.id.length - b.id.length;
+            });
+            break;
     
+        case "name":
+            products.sort((a, b) => a.name.localeCompare(b.name));  
+            break;
+
+        case "price":
+            products.sort((a, b) => a.price - b.price); 
+            break;
+            
+        default:
+            break;
+    }
 }
 
 function searchProducts(products, search) {
@@ -173,9 +192,9 @@ function searchProducts(products, search) {
 
 let products = [];
 
-products.push(new Product("120", "T-shirt", "T-shirt", 12300, "Adidas",["S", "L", "XL"], "L", 150, new Date("2022-04-15 18:30"), ["Picture1", "Picture2"]));
-products.push(new Product("11", "shirt", "shirt", 12300, "Nike",["S", "L", "XL", "XXL"], "L", 150, new Date("2022-04-15 18:30"), ["Picture1", "Picture2"]));
-products.push(new Product("100", "dress", "cool dress", 12300, "Zara",["S", "L", "XL", "XXL"], "L", 150, new Date("2022-04-15 18:30"), ["Picture1", "Picture2"]));
+products.push(new Product("120", "T-shirt", "T-shirt", 2300, "Adidas",["S", "L", "XL"], "L", 150, new Date("2022-04-15 18:30"), ["Picture1", "Picture2"]));
+products.push(new Product("11", "shirt", "shirt", 200, "Nike",["S", "L", "XL", "XXL"], "L", 150, new Date("2022-04-15 18:30"), ["Picture1", "Picture2"]));
+products.push(new Product("100", "dress", "cool dress", 932, "Zara",["S", "L", "XL", "XXL"], "L", 150, new Date("2022-04-15 18:30"), ["Picture1", "Picture2"]));
 products.push(new Product("103", "underpants", "new style", 12300, "Tico",["XXXXXL", "xL", "XXL", "XXL"], "L", 150, new Date("2022-04-15 18:30"), ["Picture1", "Picture2"]));
 
 for (const product of products) {
@@ -191,13 +210,11 @@ for (const answer of answers) {
 }
 
 console.log("______________________");
-sortProducts(products);
+sortProducts(products, 'name');
 
 for (const product of products) {
     console.log(product);
 }
-
-
 // for (const it of p) {
 //     console.log(it);
 // }
