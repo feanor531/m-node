@@ -81,14 +81,28 @@ function Product (id, name, description, price, brand, sizes, activeSize, quanti
         } 
     }
     
+
+    /**
+     * Find the "review" object by the given key
+     * @param {*} id given key
+     * @returns the "review" object by the given key
+     */
     this.getReviewByID = function(id) {
-        return this.reviews.find(item => item.id = id);
+        return this.reviews.find(item => item.id === id);
     }
 
+    /**
+     * Adds a "review" object to the "reviews" array
+     * @param {*} review 
+     */
     this.addReview = function(review) {
         this.reviews.push(review);
     }
 
+    /**
+     * Removes the "review" object from the "reviews" array by the given key (ID)
+     * @param {*} reviewID 
+     */
     this.deleteReview = function(reviewID)  {
         let position = this.reviews.findIndex(item => item.id == reviewID);
         if (position >= 0)  {
@@ -96,16 +110,31 @@ function Product (id, name, description, price, brand, sizes, activeSize, quanti
         }
     }
 
+    /**
+     * Get the image by the passed parameter
+     * @param {*} image desired picture
+     * @returns the image by the passed parameter, if the parameter was not passed then the first image from the array
+     */
     this.getImage = function(image) {
         let position = this.images.indexOf(image);
-        return position >=0 ? this.images[position] : this.images[0];
+        return position >= 0 ? this.images[position] : this.images[0];
     }
 
+    /**
+     * Adds a new value to the "sizes" array
+     * @param {*} size new value
+     */
     this.addSize = function(size)  {
         size = size.toUpperCase();
-        this.sizes.includes(size) ?? this.sizes.push(size);
+        if(!this.sizes.includes(size)) {
+             this.sizes.push(size);
+        }
     }
 
+    /**
+     * Removes a value from the "sizes" array with the given key
+     * @param {*} size Remove value
+     */
     this.deleteSize = function(size)  {
         let position = this.sizes.indexOf(size.toUpperCase());
         if (position >= 0)  {
@@ -113,6 +142,10 @@ function Product (id, name, description, price, brand, sizes, activeSize, quanti
         }
     }
 
+    /**
+     * Calculate the average rating of a product
+     * @returns average rating of a product
+     */
     this.getAverageRating = function()  {
         let sum = 0;
         for (const review of this.reviews) {
@@ -160,7 +193,11 @@ function Reviews(id, author, date, comment, rating) {
 
 }
 
-
+/**
+ * sort function
+ * @param {*} products array of products
+ * @param {*} sortRule attribute to sort by (price, name and ID.)
+ */
 function sortProducts(products, sortRule) {
     switch (sortRule) {
         case "id":
@@ -185,10 +222,22 @@ function sortProducts(products, sortRule) {
     }
 }
 
+/**
+ * Search for a product by name or description
+ * @param {*} products array of products
+ * @param {*} search text of search
+ * @returns 
+ */
 function searchProducts(products, search) {
     return products.filter(product => (product.name.includes(search) || product.description.includes(search)));
 }
 
+
+/**
+ * Test of funktion
+ */
+
+console.log("Create array products and fill out reviews");
 
 let products = [];
 
@@ -203,28 +252,82 @@ for (const product of products) {
     product.addReview(new Reviews("3", "Olga", Date.now(), "Wery bed", {'service': 1, 'price': 2, 'value': 1, 'quality': 1}));
 }
 
-let answers = searchProducts(products, "sh");
+//print products
+products.forEach(product => console.log(product));
 
-for (const answer of answers) {
-    console.log(answer);
-}
+console.log("\n##############################################################\n");
+console.log("Find the \"review\" object by the given key \"2\"");
+products.forEach(product => console.log(product.getReviewByID('2')));
 
-console.log("______________________");
+console.log("\n##############################################################\n");
+console.log("Search for an image by the passed parameter (Picture2)");
+console.log(products[1].getImage("Picture2"));
+console.log("image search parameter not set");
+console.log(products[0].getImage());
+
+console.log("\n##############################################################\n");
+console.log("Adds a new value to the \"sizes\" array");
+console.log("Before");
+console.log("ID " + products[0].id + " : " + products[0].sizes);
+
+products[0].addSize('xxxxxxL');
+console.log("After");
+console.log("ID " + products[0].id + " : " + products[0].sizes);
+
+console.log("\n##############################################################\n");
+console.log("Removes a value from the \"sizes\" array with the given key");
+console.log("Before");
+console.log("ID " + products[0].id + " : " + products[0].sizes);
+
+products[0].deleteSize("xxxxxxL");
+console.log("After");
+console.log("ID " + products[0].id + " : " + products[0].sizes);
+
+console.log("\n##############################################################\n");
+console.log("Adds a \"review\" object to the \"reviews\" array");
+console.log("Before");
+console.log("ID " + products[0].id + " : ");
+products[0].reviews.forEach(review => console.log(review));
+
+products[0].addReview(new Reviews("50", "Bartolomeo", Date.now(), "So-So", {'service': 4, 'price': 3, 'value': 3, 'quality': 4}));
+console.log("After");
+console.log("ID " + products[0].id + " : ");
+products[0].reviews.forEach(review => console.log(review));
+
+console.log("\n##############################################################\n");
+console.log("Removes the \"review\" object from the \"reviews\" array by the given key (ID)");
+console.log("Before");
+console.log("ID " + products[0].id + " : ");
+products[0].reviews.forEach(review => console.log(review));
+
+products[0].deleteReview("1");
+console.log("ID " + products[0].id + " : ");
+products[0].reviews.forEach(review => console.log(review));
+
+console.log("\n##############################################################\n");
+console.log("Average rating of a product");
+products.forEach(product => console.log("ID " + product.id + " : " + product.getAverageRating()));
+
+console.log("\n##############################################################\n");
+console.log("Search product \"sh\"");
+
+let foundProducts = searchProducts(products, "sh");
+foundProducts.forEach(product => console.log(product));
+
+console.log("\n##############################################################\n");
+console.log("Sort by name");
 sortProducts(products, 'name');
+products.forEach(product => console.log(product));
 
-for (const product of products) {
-    console.log(product);
-}
-// for (const it of p) {
-//     console.log(it);
-// }
-// p.deleteReview('4');
-// let pp = p.getReviews();
-// for (const key in pp) {
-//     if (pp.hasOwnProperty.call(pp, key)) {
-//         console.log(pp[key]);
-        
-//     }
-// }
+console.log("\n##############################################################\n");
+console.log("Sort by id");
+sortProducts(products, 'id');
+products.forEach(product => console.log(product));
+
+console.log("\n##############################################################\n");
+console.log("Sort by price");
+sortProducts(products, 'price');
+products.forEach(product => console.log(product));
+
 
 
