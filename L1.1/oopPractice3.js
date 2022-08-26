@@ -245,12 +245,52 @@ Object.assign(Electronics.prototype, {
 
 //########### end class Electronics #############
 
+//############## Other functional ########################
+/**
+ * sort function
+ * @param {*} products array of products
+ * @param {*} sortRule attribute to sort by (price, name and ID.)
+ */
+ function sortProducts(products, sortRule) {
+    switch (sortRule) {
+        case "id":
+            products.sort((a, b) => {
+                if(a.id.length === b.id.length) {
+                    return a.id.localeCompare(b.id());
+                } else 
+                    return a.id().length - b.id().length;
+            });
+            break;
+    
+        case "name":
+            products.sort((a, b) => a.name().localeCompare(b.name()));  
+            break;
+
+        case "price":
+            products.sort((a, b) => a.price() - b.price()); 
+            break;
+            
+        default:
+            break;
+    }
+}
+
+/**
+ * Search for a product by name or description
+ * @param {*} products array of products
+ * @param {*} search text of search
+ * @returns 
+ */
+function searchProducts(products, search) {
+    return products.filter(product => (product.name().includes(search) || product.description().includes(search)));
+}
+//############## End Other functional ####################
+
 //############## Test classes #############################
 
-console.log("Create array products and fill out reviews");
+//Create array products and fill out reviews
 
 let products = [];
-
 
 products.push(new Clothes({    
     name : "T-shirt", 
@@ -302,12 +342,51 @@ for (const product of products) {
     product.addReview(new Reviews("3", "Olga", Date.now(), "Wery bed", {'service': 1, 'price': 2, 'value': 1, 'quality': 1}));
 }
 
-//print products
-//products.forEach(product => console.log(product));
+console.log("\n##############################################################\n");
+console.log("Сhecking for the impossibility of creating an abstract class");
+try {
+    const product = new Product("120", "T-shirt", "T-shirt", 2300, "Adidas",["S", "L", "XL"], "L", 150, new Date("2022-04-15 18:30"), ["Picture1", "Picture2"]);
+    console.log(product.getFullInformation());
+} catch (error) {
+    console.log(error.message);
+}
 
 console.log("\n##############################################################\n");
-console.log("Find the \"review\" object by the given key \"2\"");
-//products[0].date(",jdhjjdkgjekjrhklgn,sdnvkjdsk");
-//console.log(products[0].price());
-//products[0].price(10)
+console.log("Сhecking new getter-setter for each property");
+console.log(products[0].price());
+products[0].price(10)
+console.log(products[0].price());
+console.log(products[0].material());
+products[0].material("carbon")
+console.log(products[0].material());
+
+
+console.log("\n##############################################################\n");
+console.log("Search for an image by the passed parameter (Picture2)");
+console.log(products[1].getImage("Picture2"));
+console.log("image search parameter not set");
+console.log(products[0].getImage());
+
+console.log("\n##############################################################\n");
+console.log("Search function getFullInformation()");
 console.log(products[3].getFullInformation());
+
+console.log("\n##############################################################\n");
+console.log("Search function getPriceForQuantity()");
+console.log(products[3].getPriceForQuantity(10));
+
+console.log("\n##############################################################\n");
+console.log("Search product \"sh\"");
+
+let foundProducts = searchProducts(products, "sh");
+foundProducts.forEach(product => console.log(product.getFullInformation() + "\n\n"));
+
+console.log("\n##############################################################\n");
+console.log("Sort by name");
+sortProducts(products, 'name');
+products.forEach(product => console.log(product));
+
+console.log("\n##############################################################\n");
+console.log("Sort by price");
+sortProducts(products, 'price');
+products.forEach(product => console.log(product));
