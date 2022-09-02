@@ -180,6 +180,16 @@ Object.assign(Product.prototype, {
         return `${count * this._price}$`
     },
 
+    universalGetSet(name, value) {
+        if(Object.keys(this).includes(name)) {
+            let val = value ? typeof(value) == 'string' ? `('${value}')` : `(${value})` : '()';
+            let func = new Function('obj', `return obj.${name.slice(1)}${val}`);
+            return func(this);
+        } else {
+            throw new Error ('Parameter not found');
+        };
+    },
+
 })
 
 //########### end class Product #############
@@ -359,6 +369,15 @@ console.log(products[0].price());
 console.log(products[0].material());
 products[0].material("carbon")
 console.log(products[0].material());
+
+console.log("\n##############################################################\n");
+console.log("Сhecking universal getter-setter");
+console.log(products[0].universalGetSet('_price'));
+products[0].universalGetSet('_price', 123);
+console.log(products[0].universalGetSet('_price'));
+console.log(products[0].universalGetSet('_material'));
+products[0].universalGetSet('_material', "kevlar");
+console.log(products[0].universalGetSet('_material'));
 
 
 console.log("\n##############################################################\n");
