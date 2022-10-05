@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice_1.4</title>
+    <link rel="stylesheet" href="style.css">
+    
+</head>
+<body onmousemove="viewCoords(event)" onload="bodyIsLoaded()">
+    <div id="info">
+        <p id="coord"></p>
+        <p id="userLang">dghfdg</p>
+        <p id="gps"></p>
+    </div>
+    <div id="square"></div>
+    <button onclick="css(square)">CSS</button>
+    <button onclick="js(square)">JS</button>
+    <button onclick="jsCss(square)">JS+CSS</button>
+    <br><br>
+    <div id="group">
+        <div class="squaretGroup">1</div>
+        <div class="squaretGroup">2</div>
+        <div class="squaretGroup">3</div>
+        <div class="squaretGroup">4</div>
+        <div class="squaretGroup">5</div>
+    </div>
+    <button onclick="showRect()">Click me</button><br><br>
+    <input type="text" name="inputSelector" id="selector">
+    <button onclick="changeBySelector()">Enter</button><br><br>
+    <div id="yellowSquare"></div><br><br>
+    <div style="display: flex">
+        <button onmouseover="jsCss(redSquare)" onmouseout="jsCss(redSquare)">Mouse Over Me</button>
+        <div id="redSquare"></div>
+    </div><br><br>
+    <div style="display: flex">
+        <input type="text" id="input">
+        <div id="greenRectangle" class="hidden"></div><br><br>
+    </div><br><br>
+    <div style="display: flex">
+        <input type="text" id="inputImg" value="Enter image link">
+        <button onclick="getImg()">Enter</button><br><br>
+    </div>
+    <div>
+        <img class="compactImg" id="img" src="" alt="">
+    </div><br><br>
+    <div style="display: flex">
+        <textarea id="linksArea" cols="30" rows="10"></textarea>
+        <button onclick="viewLincs()">Enter</button><br><br>
+    </div>
+    <div id="vewImg"></div>
+    <div>
+        <input type="text" class="thirteen" id="thirteenInput1">
+        <input type="text" class="thirteen" id="thirteenInput2">
+        <input type="text" class="thirteen" id="thirteenInput3">
+    </div>
+    
+    <script src="logic.js"></script>    
+</body>
+</html>

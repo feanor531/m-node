@@ -1,0 +1,63 @@
+#square {
+    width: 100px;
+    height: 100px;
+    background: #000;
+}
+
+.hidden {
+    display: none;
+}
+
+.squaretGroup {
+    width: 100px;
+    height: 100px;
+    background: #000;
+    border: 2px solid white;
+    font-size:50px;
+    color: floralwhite;
+    text-align: center;    
+}
+
+#group {
+    display:flex;    
+}
+
+#yellowSquare {
+    width: 100px;
+    height: 100px;
+    background: yellow;
+}
+
+#redSquare {
+    width: 50px;
+    height: 50px;
+    background: red;
+    border: 2px solid white;
+}
+
+#greenRectangle {
+    width: 50px;
+    height: 20px;
+    background: green;
+    border: 2px solid white;
+}
+
+.compactImg {
+    width: 300px;
+    height: auto;
+}
+
+input.thirteen {
+    background-color: aquamarine;
+    width: 120px;
+    height: 80px;
+    border-radius: 25px;
+    border: 3px solid royalblue;
+    margin: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+#info {    
+    position: fixed;
+    right: 10px;
+}
