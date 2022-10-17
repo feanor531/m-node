@@ -5,13 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Practice_1.4</title>
-    <link rel="stylesheet" href="style.css">
-    
+    <link rel="stylesheet" href="style.css">    
 </head>
 <body onmousemove="viewCoords(event)" onload="bodyIsLoaded()">
     <div id="info">
         <p id="coord"></p>
-        <p id="userLang">dghfdg</p>
+        <p id="userLang"></p>
         <p id="gps"></p>
     </div>
     <div id="square"></div>
@@ -39,7 +38,7 @@
         <div id="greenRectangle" class="hidden"></div><br><br>
     </div><br><br>
     <div style="display: flex">
-        <input type="text" id="inputImg" value="Enter image link">
+        <input type="text" id="inputImg" placeholder="Enter image link">
         <button onclick="getImg()">Enter</button><br><br>
     </div>
     <div>
@@ -54,6 +53,16 @@
         <input type="text" class="thirteen" id="thirteenInput1">
         <input type="text" class="thirteen" id="thirteenInput2">
         <input type="text" class="thirteen" id="thirteenInput3">
+    </div>
+    <div class="squaretGroup sqr" id="squareInSquare">
+        <div class="smallSquare sqr"></div>
+    </div><br><br>
+    <button onclick="showGreyScreen()">Self-destruction</button><br><br>
+    <form onsubmit="return false"><input type="submit" value="GO" ></form><br><br>
+    <div class="inputWrapper">
+        <input type="file" id="inputFile">
+        <img class="inputIcon" src="images/1.png" alt="Выбрать файл">
+        <p>Enter file</p>
     </div>
     
     <script src="logic.js"></script>    

@@ -67,8 +67,7 @@ function viewCoords(event) {
 
 //viewLeng();
 function viewLeng() {
-    document.getElementById("userLang").innerHTML = `Language: ${navigator.language}`;
-        
+    document.getElementById("userLang").innerHTML = `Language: ${navigator.language}`;        
 }
 
 //viewGPS() 
@@ -85,7 +84,8 @@ function bodyIsLoaded() {
     viewGPS() 
     document.getElementById("thirteenInput1").value = localStorage.getItem("thirteenInput1");
     document.getElementById("thirteenInput2").value = sessionStorage.getItem("thirteenInput2");
-    alert('куки: '+document.cookie);
+    document.getElementById("thirteenInput3").value = getDataFromCookie("thirteenInput3");
+    initInputArea();
 }
 document.getElementById("thirteenInput1").addEventListener("focusout", saveWithLocalStorage);
 document.getElementById("thirteenInput2").addEventListener("focusout", saveWithSessionStorage);
@@ -103,15 +103,85 @@ function saveWithSessionStorage() {
 
 function saveWithCookies() {
     const massage = document.getElementById("thirteenInput3").value;
-//     let d = new Date();
-//     d.setTime(d.getTime() + 3600000);
-//    // console.log(date.setTime(date.getTime() + 3600000));
-//     document.cookie = `thirteenInput3=${massage};expires=${d.toUTCString()};path=/`;
-//     alert('куки:mmm '+document.cookie);
     let d = new Date();
-    d.setTime(d.getTime() + (24 * 60 * 60 * 1000));
-    let expires = "expires="+d.toUTCString();
-    let rrr = `sdfgsdf=dsfdsf;${expires};`;
-    document.cookie = encodeURIComponent(rrr);
-    alert('куки:mmm '+document.cookie);
+    d.setTime(d.getTime() + 3600000);
+    document.cookie = `thirteenInput3=${massage};expires=${d.toUTCString()};`;
 }
+
+function getDataFromCookie(name) {
+    return document.cookie.split(';')
+    .find(item => item.includes(name))
+    .split('=')[1]
+}
+
+
+//14
+window.addEventListener('scroll', goToTopPage);
+
+function goToTopPage() {
+    let windowRelativeBottom = document.documentElement.getBoundingClientRect().bottom;
+    if(windowRelativeBottom <= document.documentElement.clientHeight) {
+        let tag = document.createElement("img");
+        tag.id = "goToTopButton";
+        tag.src = "images/arrow_up.png"
+        tag.addEventListener("click", () => window.scroll({ top: 0, behavior: 'smooth' }));
+        document.body.append(tag);
+    } else if(windowRelativeBottom > document.documentElement.clientHeight + 100) {
+        document.getElementById("goToTopButton")?.remove();
+    }
+}
+
+//15
+squareInSquare.onclick = function(event) {
+    if(event.target.className.includes('sqr')) {
+        alert(`I\`m square`);
+        console.log(event);
+    }
+}
+//16
+function showGreyScreen() {
+    let tag = document.createElement("div");
+    tag.id = "greySquare";
+    tag.value = "I\`s over"
+    tag.addEventListener("click", function() {
+        js(this);
+        document.body.style.overflow = "scroll";
+    });
+    document.body.append(tag);
+    document.body.style.overflow = "hidden";
+}
+
+function initInputArea() {
+    const wrap = document.querySelector('.inputWrapper');
+    const icon = document.querySelector('.inputIcon');
+
+    const active = () => {
+        wrap.style.backgroundColor = '#7fffd4';
+    }
+
+    const inactive = () => {
+        wrap.style.backgroundColor = '#f0f8ff';
+    }
+
+    const prevents = (e) => e.preventDefault();
+
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eName => {
+        wrap.addEventListener(eName, prevents);
+    });
+
+    ['dragenter', 'dragover'].forEach(eName => {
+        wrap.addEventListener(eName, active);
+    });
+
+    ['dragleave', 'drop'].forEach(eName => {
+        wrap.addEventListener(eName, inactive);
+    });
+
+    wrap.addEventListener('drop', (e) => {
+        icon.src = "images/2.png";
+        const dt = e.dataTransfer;
+        const file = dt.files;
+        
+    });
+}
+
